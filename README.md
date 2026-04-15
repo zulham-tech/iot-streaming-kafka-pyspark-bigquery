@@ -1,36 +1,34 @@
-﻿# Real-Time IoT Streaming Pipeline | Kafka Â· PySpark Â· BigQuery
+# Real-Time IoT Streaming Pipeline
 
-> **Type:** Streaming | **Stack:** Open-Meteo API â†’ Kafka â†’ PySpark â†’ PostgreSQL â†’ BigQuery â†’ Airflow
-
-## Overview
-Built end-to-end streaming pipeline monitoring weather conditions across 5 Indonesian cities in real-time.
+**Stack:** Open-Meteo API -> Kafka -> PySpark -> PostgreSQL -> BigQuery -> Airflow
 
 ## Key Metrics
-- **<60 seconds** end-to-end latency
-- **7,200 events/day** processed continuously
-- **95%+** data completeness enforced via quality gate
-- **5-min tumbling windows** with z-score anomaly detection
+- Less than 60 seconds end-to-end latency
+- 7,200 events/day processed continuously
+- 95%+ data completeness enforced via quality gate
+- 5-min tumbling windows with z-score anomaly detection
 
 ## Architecture
 ```
-Open-Meteo API (5 sensor nodes Â· 60s interval)
-    â†“
-Kafka [iot-weather-sensors Â· 5 partitions Â· GZIP]
-    â†“ (PySpark Structured Streaming)
-PySpark â†’ watermark 2min â†’ 5-min window â†’ z-score anomaly
-    â†“ (foreachBatch)
-PostgreSQL (operational) + BigQuery (analytics Â· hourly sync)
+Open-Meteo API (5 sensor nodes, 60s interval)
+    |
+Kafka [iot-weather-sensors, 5 partitions, GZIP]
+    |
+PySpark Structured Streaming
+    -> watermark 2min -> 5-min window -> z-score anomaly
+    |
+PostgreSQL (operational) + BigQuery (analytics, hourly sync)
 ```
 
 ## Tech Stack
-Python Â· Apache Kafka 3.6 Â· PySpark 3.5 Â· Apache Airflow 2.8 Â· PostgreSQL Â· Google BigQuery Â· Docker
+Python, Apache Kafka 3.6, PySpark 3.5, Apache Airflow 2.8, PostgreSQL, Google BigQuery, Docker
 
 ## Quick Start
 ```bash
 docker compose up -d
-# Airflow â†’ http://localhost:8080 (admin/admin)
-# Kafka UI â†’ http://localhost:9090
+# Airflow: http://localhost:8080 (admin/admin)
+# Kafka UI: http://localhost:9090
 ```
 
 ## Author
-**Ahmad Zulham Hamdan** | [LinkedIn](https://linkedin.com/in/ahmad-zulham-hamdan-665170279) | [GitHub](https://github.com/zulham-tech)
+Ahmad Zulham Hamdan | https://linkedin.com/in/ahmad-zulham-hamdan-665170279
